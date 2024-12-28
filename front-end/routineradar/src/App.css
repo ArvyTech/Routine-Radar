@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #1c1c1c, #0d0d0d);
+  color: #f1f1f1;
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #00ff99;
+  text-align: center;
+  margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
