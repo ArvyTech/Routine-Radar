@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Technology, Activity
 from .serializers import TechnologySerializer, ActivitySerializer
+from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from .ai_utils import generate_feedback
 
 class TechnologyList(APIView):
     def get(self, request):
@@ -57,4 +60,23 @@ class ActivityList(ListAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
 
+@api_view(['POST'])
+def get_feedback(request):
+    """
+
+    API endpoint to generate feedback based on activity description.
+    Expects JSON input with an 'activity_description' field.
+    """
+
+    data = request.data
+    activity_description = data.get('activity_description', '')
+
+    if not activity_description:
+        return JsonResponse({ 'error' : 'Activity Description is required.'}, status=400)
+
+
+    feedback = generate_feedback(activity_description)
+
+    return JsonResponse({'feedback': feedback})
